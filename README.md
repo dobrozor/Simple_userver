@@ -21,14 +21,17 @@
 
 Далее устанавливаем фаерволл, важная штука, я через неё открываю и смотрю порты к серверу
 ```sudo apt-get install ufw```
+
 После установки его включаем
 ```sudo ufw enable```
+
 И открывает порты
-```sudo ufw allow 22
-sudo ufw allow 8080
-sudo ufw allow 5657
-sudo ufw allow 80
-sudo ufw allow 433```
+```sudo ufw allow 22```
+```sudo ufw allow 8080```
+```sudo ufw allow 5657```
+```sudo ufw allow 80```
+```sudo ufw allow 433```
+
 Эти порты нужны для следущего: Удаленный доступ-SSH(22), Панелька для хостинга серверов-Pufferpanel(8080), для SFTP Pufferpanel(5657), для сайтов http и https (80, 433)
 
 
@@ -38,16 +41,22 @@ sudo ufw allow 433```
 
 Устанвливаем апатч
 ```sudo apt install apache2```
+
 И включаем его
 ```sudo systemctl start apache2```
+
 Устанавливаем скюэль
 ```sudo apt install mysql-server```
+
 Включаем его
 ```sudo systemctl start mysql```
+
 Устанавливаем пхп в библиотеке
 ```sudo apt install php libapache2-mod-php php-mysql```
+
 И сам пхп
 ```sudo apt install php```
+
 На этом этапе всё готово по серверу. Теперь к хостингу...
 #Тут каждому своё, это не обязательно УСТАНОВКА PUFFERPANEL (для меня удобная панелька для майнкрафт хоста с веб интерфейсом)
 
