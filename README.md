@@ -15,61 +15,69 @@
 Теперь устанавливаем на сервер адекватную дату для отображения всего что будет на сервере
 ```timedatectl set-timezone Europe/Moscow``` это утснавливает время МСК, если что, можешь найди другие таймзоны и изменить Europe/Mosxow
 
-sudo apt-get install openssh-server
+### После базы переходим к реальной устновке севрера
+Это дает нам удаленный доступ к нашему серверу, начиная с этого момента можно отключать монитор от вашего сервера
+```sudo apt-get install openssh-server```
 
-sudo apt-get install ufw
-
-sudo ufw enable
-
-sudo ufw allow 22
+Далее устанавливаем фаерволл, важная штука, я через неё открываю и смотрю порты к серверу
+```sudo apt-get install ufw```
+После установки его включаем
+```sudo ufw enable```
+И открывает порты
+```sudo ufw allow 22
 sudo ufw allow 8080
 sudo ufw allow 5657
 sudo ufw allow 80
-sudo ufw allow 433
+sudo ufw allow 433```
+Эти порты нужны для следущего: Удаленный доступ-SSH(22), Панелька для хостинга серверов-Pufferpanel(8080), для SFTP Pufferpanel(5657), для сайтов http и https (80, 433)
 
-УСТАНОВКА СТЕКА ЛАМП (это база)
 
-sudo apt install apache2
+#УСТАНОВКА СТЕКА ЛАМП (это база)
+На этом пункте мы утаналвиваем стэк состоящий из апатча, скюэль и пхп. Для будущих проектов без него никуда. 
+Хотя если имеешь знания, апач можно заменить на NGINX, но это ты сам в будущем разберешься
 
-sudo systemctl start apache2
+Устанвливаем апатч
+```sudo apt install apache2```
+И включаем его
+```sudo systemctl start apache2```
+Устанавливаем скюэль
+```sudo apt install mysql-server```
+Включаем его
+```sudo systemctl start mysql```
+Устанавливаем пхп в библиотеке
+```sudo apt install php libapache2-mod-php php-mysql```
+И сам пхп
+```sudo apt install php```
+На этом этапе всё готово по серверу. Теперь к хостингу...
+#Тут каждому своё, это не обязательно УСТАНОВКА PUFFERPANEL (для меня удобная панелька для майнкрафт хоста с веб интерфейсом)
 
-sudo apt install mysql-server
+```curl -s https://packagecloud.io/install/repositories/pufferpanel/pufferpanel/script.deb.sh | sudo bash```
 
-sudo systemctl start mysql
+```sudo apt-get install pufferpanel=2.7.0```
 
-sudo apt install php libapache2-mod-php php-mysql
-
-sudo apt install php
-
-Тут каждому своё, это не обязательно УСТАНОВКА PUFFERPANEL (для меня удобная панелька для майнкрафт хоста + сайт)
-
-curl -s https://packagecloud.io/install/repositories/pufferpanel/pufferpanel/script.deb.sh | sudo bash
-
-sudo apt-get install pufferpanel=2.7.0
-
-sudo pufferpanel user add
+```sudo pufferpanel user add```
 
 *Вводишь имя, почту и пароль, в целом на похуй можно просто admin, admin@admin.ru и тд (у меня лично так) в конце главное там где ADMIN (Y/N) ставь Y типо админ аккаунт*
 
-sudo systemctl enable --now pufferpanel
+```sudo systemctl enable --now pufferpanel```
 
 Дальше переходишь на http://ТВОЙ_АЙПИ:8080 и всё работает)
 
 
-ДЕЛАЕМ SFTP ДОСТУП ЧЕРЕЗ FILEZILLA С ПОЛНЫМИ ПРАВАМИ (удобно файлики загружать)
+#ДЕЛАЕМ SFTP ДОСТУП ЧЕРЕЗ FILEZILLA С ПОЛНЫМИ ПРАВАМИ (удобно файлики загружать)
 
-sudo passwd root
+```sudo passwd root```
 Задаем пароль
 
-sudo apt-get install ssh
+```sudo apt-get install ssh```
 
-sudo nano /etc/ssh/sshd_config
+```sudo nano /etc/ssh/sshd_config```
 
 В конфиге находишь строчку PermitRootLogin, если перед ней "#" удалчешь "#" и строчка должна выглядеть так PermitRootLogin yes
 
 Закрываешь файл: Ctrl+S, Ctrl+X
 
-sudo service ssh restart
+```sudo service ssh restart```
 
 Для подключения в filezilla
 
